@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdur Rahman - Java Backend Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1A1F2E;
+            --coral: #FF5A5F;
+            --neutral-bg: #F5F7FA;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --section-padding: 5rem;
+            --text-color: #1A1F2E;
+        }
+
+        /* Dark Mode */
+        [data-theme="dark"] {
+            --navy: #0D1117;
+            --neutral-bg: #161B22;
+            --card-bg: rgba(22, 27, 34, 0.95);
+            --glass-bg: rgba(22, 27, 34, 0.3);
+            --text-color: #E6EDF3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            background: var(--neutral-bg);
+            color: var(--text-color);
+            padding-top: 80px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        main {
+            min-height: 100vh;
+            /* Ensure footer is scrollable */
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            color: var(--text-color);
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--coral);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            justify-content: space-between;
+        }
+
+        .hamburger span {
+            height: 3px;
+            background: var(--text-color);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: var(--glass-bg);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                width: 200px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s;
+            }
+
+            .nav-links.open {
+                max-height: 300px;
+                padding: 1rem;
+            }
+
+            .nav-links li {
+                padding: 0.8rem 1.2rem;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            body {
+                padding-top: 60px;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Sections */
+        .hero,
+        .experience,
+        .projects,
+        .services,
+        .footer {
+            padding: var(--section-padding) 2rem;
+            margin-bottom: 3rem;
+        }
+
+        #home:target,
+        #services:target,
+        #contact:target {
+            padding-top: calc(var(--section-padding) + 80px);
+            margin-top: -80px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--coral) 0%, #FF8789 100%);
+            color: #fff;
+            text-align: center;
+            border-radius: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .resume-btn {
+            display: inline-block;
+            background: var(--card-bg);
+            color: var(--coral);
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 1rem 2.5rem;
+            border-radius: 3rem;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .resume-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Experience */
+        .experience {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .exp-role {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--coral);
+            margin-bottom: 1.5rem;
+        }
+
+        .exp-card ul {
+            list-style: none;
+            font-size: 1.1rem;
+        }
+
+        .exp-card li {
+            margin-bottom: 0.8rem;
+        }
+
+        /* Projects */
+        .projects {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            color: var(--coral);
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            font-size: 0.95rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .project-tags span {
+            background: var(--glass-bg);
+            color: var(--text-color);
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .project-duration {
+            font-size: 0.95rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        /* Services */
+        .services {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--coral);
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .service-desc {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--card-bg);
+            color: var(--text-color);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 2rem 2rem 0 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 1;
+            min-height: 300px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 0.8rem;
+            font-size: 1rem;
+            background: var(--glass-bg);
+            color: var(--text-color);
+        }
+
+        .contact-form button {
+            background: var(--coral);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 0.8rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .contact-form button:hover {
+            background: #E64A4F;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-icon {
+            color: var(--text-color);
+            font-size: 1.8rem;
+            transition: color 0.3s;
+        }
+
+        .footer-icon:hover {
+            color: var(--coral);
+        }
+
+        .footer-copy {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            #home:target,
+            #services:target,
+            #contact:target {
+                padding-top: calc(var(--section-padding) + 60px);
+                margin-top: -60px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .hero,
+            .experience,
+            .projects,
+            .services,
+            .footer {
+                padding: 3rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .resume-btn {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="brand">ABDUR RAHMAN</div>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+                <div class="hamburger" id="hamburger" aria-label="Open navigation" tabindex="0">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home" data-aos="fade-up">
+            <h1>Java Backend Developer | 2 Years of Experience</h1>
+            <p>
+                Crafting robust applications with <strong>Spring Boot</strong>,
+                <strong>Microservices</strong>, and <strong>REST APIs</strong>.<br>
+                Dedicated to clean code and scalable solutions for modern businesses.
+            </p>
+            <a class="resume-btn"
+                href="https://drive.google.com/file/d/1EkEne6t8fZlMNMBekqe3QsBR_QD0S_K1/view?usp=sharing"
+                target="_blank" rel="noopener">Download Resume</a>
+        </section>
+
+        <section class="experience" data-aos="fade-up" data-aos-delay="100">
+            <h2>Professional Journey</h2>
+            <div class="exp-card">
+                <div class="exp-role">Java Backend Developer | 2 Years Experience</div>
+                <ul>
+                    <li>Spring Boot | Microservices Architecture | Docker</li>
+                    <li>AWS Cloud Integration | Database Optimization</li>
+                    <li>Agile Methodologies | CI/CD Pipelines</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="projects" data-aos="fade-up" data-aos-delay="200">
+            <h2>Key Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="300">
+                    <h3>Academic Service</h3>
+                    <div class="project-meta">
+                        <span>Client: CrossUp Data Solution</span>
+                        <span>Role: Backend Developer</span>
+                    </div>
+                    <div class="project-tags">
+                        <span>Java 17</span>
+                        <span>Spring Boot</span>
+                        <span>PostgreSQL</span>
+                        <span>Docker</span>
+                    </div>
+                    <div class="project-duration">Present (Jan 2025 – Present)</div>
+                    <p>
+                        Academic Service is a backend system designed to manage student operations like registration,
+                        attendance, and exam results.
+                        It was built using modular service layers, DTO pattern, and clean architecture to ensure
+                        scalability and maintainability.
+                        Implemented key features like pagination, search, and filtering to support smooth frontend
+                        integration.
+                        This improved system performance, reduced code duplication, and made API consumption easier for
+                        developers.
+                    </p>
+                </div>
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="400">
+                    <h3>Insurance Application</h3>
+                    <div class="project-meta">
+                        <span>Client: Tove</span>
+                        <span>Role: Backend Developer</span>
+                    </div>
+                    <div class="project-tags">
+                        <span>Java 17</span>
+                        <span>Spring Boot</span>
+                        <span>MySQL</span>
+                        <span>Docker</span>
+                    </div>
+                    <div class="project-duration">5 Months (Aug 2024 – Dec 2024)</div>
+                    <p>
+                        Insurance Application is a backend platform that manages customer policies, claim processing,
+                        and transaction tracking in a secure and organized way.
+                        It was developed using Spring Boot, following clean architecture, DTO patterns, and role-based
+                        access with JWT for security.
+                        APIs were designed to be secure, user-friendly, and frontend-ready with proper status codes,
+                        filtering, and documentation.
+                        This improved claim handling speed, ensured secure access, and made the system easy to maintain
+                        and scale.
+                    </p>
+                </div>
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="500">
+                    <h3>E-commerce Microservices</h3>
+                    <div class="project-meta">
+                        <span>Client: ShopEase</span>
+                        <span>Role: Backend Architect</span>
+                    </div>
+                    <div class="project-tags">
+                        <span>Java 17</span>
+                        <span>Spring Boot</span>
+                        <span>PostgreSQL</span>
+                        <span>Microservices</span>
+                        <span>Docker</span>
+                        <span>Kafka</span>
+                    </div>
+                    <div class="project-duration">12 Months (Aug 2023 – Nov 2024)</div>
+                    <p>
+                        E-Commerce Microservices is a distributed backend system designed to handle product listings,
+                        orders, payments, inventory, and user management in an online shopping platform.
+                        It follows the Microservices Architecture, where each module (like product, order, inventory,
+                        user, payment) runs independently using Spring Boot, Spring Cloud, Eureka, and API Gateway.
+                        Integrated secure communication between services using WebClient and ensured loose coupling with
+                        centralized config, service discovery, and JWT-based authentication.
+                        This structure enables high scalability, independent deployment, easier maintenance, and better
+                        fault isolation for business-critical features. </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="services" id="services" data-aos="fade-up" data-aos-delay="300">
+            <h2>Services</h2>
+            <div class="services-grid">
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="service-icon">📚</div>
+                    <div class="service-title">Java Fundamentals Course</div>
+                    <div class="service-desc">Master Core Java & OOP Concepts</div>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="service-icon">⚙️</div>
+                    <div class="service-title">Spring Boot Training</div>
+                    <div class="service-desc">Build Production-Ready REST APIs</div>
+                </div>
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="service-icon">🌐</div>
+                    <div class="service-title">Microservices Architecture</div>
+                    <div class="service-desc">Design Scalable Distributed Systems</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="contact" data-aos="fade-up" data-aos-delay="400">
+        <h2>Contact Me</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+        <div class="footer-social">
+            <a href="mailto:course.abdurrahman@gmail.com" class="footer-icon" title="Email" target="_blank"
+                rel="noopener">
+                <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M2 4.75A2.75 2.75 0 0 1 4.75 2h14.5A2.75 2.75 0 0 1 22 4.75v14.5A2.75 2.75 0 0 1 19.25 22H4.75A2.75 2.75 0 0 1 2 19.25V4.75Zm2.75-.25a.75.75 0 0 0-.75.75v.217l8 5.333 8-5.333V5.25a.75.75 0 0 0-.75-.75H4.75Zm15.25 2.783-7.615 5.075a1 1 0 0 1-1.17 0L3.25 7.283V19.25c0 .414.336.75.75.75h14.5a.75.75 0 0 0 .75-.75V7.283Z" />
+                </svg>
+            </a>
+            <a href="https://twitter.com/" class="footer-icon" title="Twitter" target="_blank" rel="noopener">
+                <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M22 5.924c-.793.352-1.645.59-2.54.697a4.48 4.48 0 0 0 1.964-2.475 8.94 8.94 0 0 1-2.828 1.082A4.48 4.48 0 0 0 11.03 9.5c0 .352.04.695.116 1.022C7.728 10.37 4.1 8.6 1.67 5.905a4.48 4.48 0 0 0-.606 2.254c0 1.555.792 2.927 2.002 3.732a4.48 4.48 0 0 1-2.03-.56v.057a4.48 4.48 0 0 0 3.6 4.393c-.193.052-.397.08-.607.08-.148 0-.292-.014-.432-.04a4.48 4.48 0 0 0 4.184 3.11A8.98 8.98 0 0 1 2 19.54a12.67 12.67 0 0 0 6.86 2.01c8.23 0 12.74-6.82 12.74-12.74 0-.194-.004-.387-.013-.578A9.13 9.13 0 0 0 24 4.59a8.98 8.98 0 0 1-2.6.713Z" />
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/abdurrahman001/" class="footer-icon" title="LinkedIn" target="_blank"
+                rel="noopener">
+                <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M19 3A2 2 0 0 1 21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14Zm-9.5 7.5H7V17h2.5v-6.5ZM8.25 7.75a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5ZM17 12.75c0-1.24-.99-2.25-2.25-2.25-.69 0-1.31.28-1.75.73V10.5H11V17h2.5v-3.25c0-.41.34-.75.75-.75s.75.34.75.75V17H17v-4.25Z" />
+                </svg>
+            </a>
+        </div>
+        <div class="footer-copy">
+            © 2025 Abdur Rahman. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true });
+
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+
+        // Smooth scrolling
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('href').substring(1);
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // Theme toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        const setTheme = theme => {
+            body.setAttribute('data-theme', theme);
+            themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+            localStorage.setItem('theme', theme);
+        };
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            setTheme(currentTheme);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+    </script>
+</body>
+
+</html>
